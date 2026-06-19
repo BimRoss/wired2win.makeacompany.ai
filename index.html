@@ -34,6 +34,20 @@
 
   .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
+  /* Mobile nav toggle — checkbox hack, no JS */
+  .nav-toggle { display: none; }
+  .nav-toggle-label { display: none; cursor: pointer; padding: 8px; margin: -8px; }
+  .nav-toggle-label span,
+  .nav-toggle-label span::before,
+  .nav-toggle-label span::after {
+    display: block; width: 22px; height: 2px; background: var(--ink);
+    border-radius: 2px; position: relative; transition: transform .2s ease;
+  }
+  .nav-toggle-label span::before,
+  .nav-toggle-label span::after { content: ''; position: absolute; left: 0; }
+  .nav-toggle-label span::before { top: -7px; }
+  .nav-toggle-label span::after { top: 7px; }
+
   /* ------- Nav ------- */
   .nav {
     position: sticky; top: 0; z-index: 50;
@@ -265,31 +279,90 @@
 
   /* ------- Responsive ------- */
   @media (max-width: 900px) {
-    .nav-links { display: none; }
+    .nav-toggle-label { display: inline-flex; align-items: center; margin-left: auto; margin-right: 14px; }
+    .nav-links {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--paper); border-bottom: 1px solid var(--line);
+      flex-direction: column; gap: 0; padding: 8px 28px 20px;
+    }
+    .nav-links a {
+      padding: 14px 0; border-bottom: 1px solid var(--line);
+      font-size: 16px; color: var(--ink);
+    }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-toggle:checked ~ .nav-inner .nav-links { display: flex; }
+    .nav { position: relative; }
+    .nav-inner { position: static; }
     .hero { padding: 60px 0 70px; }
-    .hero-meta { grid-template-columns: 1fr; gap: 18px; }
-    .loop { padding: 50px 28px; }
-    .loop-stages { grid-template-columns: 1fr 1fr; }
-    .programs { grid-template-columns: 1fr; }
-    .pillars { grid-template-columns: 1fr 1fr; }
-    .who { grid-template-columns: 1fr; }
-    .founder { padding: 50px 30px; }
-    .founder-grid { grid-template-columns: 1fr; text-align: center; }
-    .founder-photo { margin: 0 auto; }
+    .hero-meta { grid-template-columns: 1fr; gap: 18px; margin-top: 48px; padding-top: 24px; }
+    .hero-meta-item .num { font-size: 32px; }
+    .loop { padding: 50px 28px; border-radius: 24px; }
+    .loop-stages { grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+    .programs { grid-template-columns: 1fr; gap: 22px; margin-top: 36px; }
+    .pillars { grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+    .who { grid-template-columns: 1fr; gap: 18px; margin-top: 36px; }
+    .who-card { padding: 28px 24px; }
+    .founder { padding: 50px 30px; border-radius: 24px; }
+    .founder-grid { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+    .founder-photo { margin: 0 auto; width: 220px; height: 270px; }
+    .founder blockquote { font-size: 22px; }
     .hero-grid { grid-template-columns: 1fr; gap: 32px; }
     .hero-img { aspect-ratio: 4/3; }
     .program-body { padding: 28px; }
+    section { padding: 72px 0; }
+  }
+
+  @media (max-width: 560px) {
+    .container { padding: 0 20px; }
+    .nav-inner { padding: 14px 0; }
+    .nav-inner > .btn-primary { display: none; }
+    .brand { font-size: 16px; }
+    .brand-mark { width: 28px; height: 28px; font-size: 15px; }
+    .hero { padding: 36px 0 52px; }
+    .hero h1 { font-size: 34px; }
+    .hero-sub { font-size: 17px; margin-top: 20px; }
+    .hero-cta { margin-top: 28px; gap: 10px; }
+    .hero-cta .btn { width: 100%; justify-content: center; }
+    .hero-img { aspect-ratio: 5/4; border-radius: 22px; }
+    .hero-img-badge { left: 14px; bottom: 14px; font-size: 12px; padding: 8px 12px; }
+    .hero-meta { margin-top: 40px; gap: 14px; padding-top: 20px; }
+    .hero-meta-item .num { font-size: 28px; }
+    .hero-meta-item .label { font-size: 13.5px; }
+    .eyebrow { font-size: 12px; padding: 5px 10px; margin-bottom: 18px; }
+    section { padding: 56px 0; }
+    .section-title { font-size: 28px; }
+    .section-lede { font-size: 16px; margin-top: 14px; }
+    .loop { padding: 36px 22px; border-radius: 20px; margin-top: 28px; }
+    .loop-stages { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
+    .stage { padding: 20px 18px; }
+    .loop-tail { font-size: 14px; margin-top: 30px; padding-top: 24px; }
+    .pillars { grid-template-columns: 1fr; gap: 14px; margin-top: 28px; }
+    .pillar { padding: 22px; }
+    .program-body { padding: 24px 22px 28px; }
+    .program-card h3 { font-size: 26px; }
+    .program-age { margin-bottom: 18px; }
+    .who-card h3 { font-size: 22px; }
+    .founder { padding: 40px 24px; border-radius: 20px; margin: 24px 0; }
+    .founder blockquote { font-size: 20px; line-height: 1.4; }
+    .founder-photo { width: 180px; height: 220px; }
+    .final-cta { padding: 64px 0 72px; }
+    .final-cta .hero-cta .btn { width: 100%; justify-content: center; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+    footer a { margin-left: 0; margin-right: 18px; }
+    footer { padding: 36px 0 28px; }
   }
 </style>
 </head>
 <body>
 
 <nav class="nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
   <div class="container nav-inner">
     <div class="brand">
       <div class="brand-mark">W</div>
       Wired2Win Golf
     </div>
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Open menu"><span></span></label>
     <div class="nav-links">
       <a href="#loop">The Loop</a>
       <a href="#programs">Programs</a>
